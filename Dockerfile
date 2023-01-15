@@ -1,12 +1,10 @@
 FROM python:3.9
-ARG PORT=80
-ENV PORT=$PORT
+ARG port_var=80
+ENV PORT=$port_var
 
 RUN echo "Port is $PORT"
 
 WORKDIR /app
-
-ENV PORT
 
 COPY ./requirements.txt /app/requirements.txt
 
