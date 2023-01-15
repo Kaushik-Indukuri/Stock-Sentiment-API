@@ -1,1 +1,3 @@
-Hello
+# Stock Sentiment API 
+Contributors: Kaushik Indukuri
+
