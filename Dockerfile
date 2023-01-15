@@ -2,7 +2,6 @@ ARG port_var=80
 FROM python:3.9
 
 RUN echo "Port is $port_var"
-RUN echo "$PORT"
 
 WORKDIR /app
 
