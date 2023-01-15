@@ -1,8 +1,8 @@
 FROM python:3.9
-ARG port_var=80
-ENV PORT=$port_var
+# ARG port_var=80
+# ENV PORT=$port_var
 
-RUN echo "Port is $PORT"
+# RUN echo "Port is $PORT"
 
 WORKDIR /app
 
@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
 
 COPY ./src /app/src
 
-CMD ["uvicorn", "src.main:app", "--host=0.0.0.0", "--port=$PORT"]
+ENTRYPOINT uvicorn src.main:app --host 0.0.0.0 --port $PORT
