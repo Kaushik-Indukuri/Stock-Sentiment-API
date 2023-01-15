@@ -32,7 +32,7 @@ async def get_avg_sentiment(ticker: str, res: Response):
         return data.getAvgSentiment(ticker)
     except Exception:
         res.status_code = status.HTTP_400_BAD_REQUEST
-        return {'error': 'Enter an appropriate ticker'} 
+        return {'error': Exception} 
 
 @app.get("/top_positive_news/{ticker}", status_code=200)
 async def get_top_positive_news(ticker: str, res: Response, q: int = 3):

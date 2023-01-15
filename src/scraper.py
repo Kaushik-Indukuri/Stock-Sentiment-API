@@ -32,7 +32,6 @@ class Scraper():
             except:
                 continue
 
-            print(row.select_one(':nth-child(3)').span)
             item = {
                 'date': date,
                 'open': open,
@@ -44,7 +43,11 @@ class Scraper():
             }
             parsed_data.append(item)
 
-        return parsed_data
+        res = {
+            'daily_metrics': parsed_data
+        }
+
+        return res
 
     #Helper Function For All Sentiment Functions
     def helper(self, ticker):
@@ -82,7 +85,7 @@ class Scraper():
     #Get Full Sentiment Analysis Scores
     def getSentiment(self, ticker):
         df = self.helper(ticker)
-        json_data=[]
+        parsed_data=[]
         for index, row in df.iterrows():
             item = {
                 'date': row['date'],
@@ -92,21 +95,32 @@ class Scraper():
                 'compound': row['compound'],
                 
             }
-            json_data.append(item)
+            parsed_data.append(item)
 
-        return json_data
+        return parsed_data
 
     #Return Avg Sentiment Score From the Past Month
     def getAvgSentiment(self, ticker):
         df = self.helper(ticker)
         score = 0
+        start_date = ""
+        end_date = ""
         for index, row in df.iterrows():
+            if index==0:
+                end_date = row['date']
+            if index==len(df)-1:
+                start_date = row['date']
             score+=float(row['compound'])
         
         alpha = 15
         norm_score = score/math.sqrt((score*score) + alpha)
         item = {
             'avg_sentiment': norm_score,
+            'date_range': {
+                'start_date': start_date,
+                'end_date': end_date
+            },
+            'number_of_articles': len(df)
         }
         return item
 
@@ -118,7 +132,7 @@ class Scraper():
             arr.append((row['compound'], row['title'], row['link'], row['date']))
 
         arr.sort()
-        json_data = []
+        parsed_data = []
         for i in range(n):
             temp = arr.pop()
             item = {
@@ -128,9 +142,9 @@ class Scraper():
                 'link': temp[2],
                 'compound': temp[0],
             }
-            json_data.append(item)
-        
-        return json_data
+            parsed_data.append(item)
+
+        return parsed_data
 
     #Return Lowest N Sentiment Scores
     def getNegativeNews(self, ticker, n):
@@ -140,7 +154,7 @@ class Scraper():
             arr.append((row['compound'], row['title'], row['link'], row['date']))
 
         arr.sort()
-        json_data = []
+        parsed_data = []
         for i in range(n):
             item = {
                 'rank': i+1,
@@ -149,8 +163,9 @@ class Scraper():
                 'link': arr[i][2],
                 'compound': arr[i][0],
             }
-            json_data.append(item)
-        return json_data
+            parsed_data.append(item)
+
+        return parsed_data
 
 # data = Scraper()
 # print(data.getPositiveNews('GME', 3))
