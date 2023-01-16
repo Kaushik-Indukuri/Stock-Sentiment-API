@@ -10,7 +10,7 @@ data = Scraper()
 async def check_health():
     return {'STATUS': 'Up and running!'}
 
-@app.get("/market_data/{ticker}", status_code=200)
+@app.get("/market_data/", status_code=200)
 async def get_data(ticker: str, res: Response):
     try:
         return data.getPrices(ticker)
@@ -18,7 +18,7 @@ async def get_data(ticker: str, res: Response):
         res.status_code = status.HTTP_400_BAD_REQUEST
         return {'error': 'Enter an appropriate ticker'}
 
-@app.get("/stock_news_sentiment/{ticker}", status_code=200)
+@app.get("/stock_news_sentiment/", status_code=200)
 async def get_sentiment(ticker: str, res: Response):
     try:
         return data.getSentiment(ticker)
@@ -26,7 +26,7 @@ async def get_sentiment(ticker: str, res: Response):
         res.status_code = status.HTTP_400_BAD_REQUEST
         return {'error':'Enter an appropriate ticker'} 
 
-@app.get("/avg_sentiment/{ticker}", status_code=200)
+@app.get("/avg_sentiment/", status_code=200)
 async def get_avg_sentiment(ticker: str, res: Response):
     try:
         return data.getAvgSentiment(ticker)
@@ -34,18 +34,18 @@ async def get_avg_sentiment(ticker: str, res: Response):
         res.status_code = status.HTTP_400_BAD_REQUEST
         return {'error': Exception} 
 
-@app.get("/top_positive_news/{ticker}", status_code=200)
-async def get_top_positive_news(ticker: str, res: Response, q: int = 3):
+@app.get("/top_positive_news/", status_code=200)
+async def get_top_positive_news(ticker: str, res: Response, count: int = 3):
     try:
-        return data.getPositiveNews(ticker, q)
+        return data.getPositiveNews(ticker, count)
     except Exception:
         res.status_code = status.HTTP_400_BAD_REQUEST
         return {'error':'Enter an appropriate ticker'} 
 
-@app.get("/top_negative_news/{ticker}", status_code=200)
-async def get_top_negative_news(ticker: str, res: Response, q: int = 3):
+@app.get("/top_negative_news/", status_code=200)
+async def get_top_negative_news(ticker: str, res: Response, count: int = 3):
     try:
-        return data.getNegativeNews(ticker, q)
+        return data.getNegativeNews(ticker, count)
     except Exception:
         res.status_code = status.HTTP_400_BAD_REQUEST
         return {'error':'Enter an appropriate ticker'} 
