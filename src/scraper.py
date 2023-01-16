@@ -133,9 +133,9 @@ class Scraper():
 
         arr.sort()
         parsed_data = []
+
+        n = min(len(arr), n)
         for i in range(n):
-            if arr is None:
-                break
             temp = arr.pop()
             item = {
                 'rank': i+1,

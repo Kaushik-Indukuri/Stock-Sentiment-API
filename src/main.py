@@ -40,7 +40,7 @@ async def get_top_positive_news(ticker: str, res: Response, count: int = 3):
         return data.getPositiveNews(ticker, count)
     except Exception:
         res.status_code = status.HTTP_400_BAD_REQUEST
-        return {'error':'Enter an appropriate ticker'} 
+        return {'error':Exception} 
 
 @app.get("/top_negative_news/", status_code=200)
 async def get_top_negative_news(ticker: str, res: Response, count: int = 3):
