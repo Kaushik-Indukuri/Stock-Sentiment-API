@@ -32,14 +32,15 @@ class Scraper():
             except:
                 continue
 
+            volume = volume.replace(',', '')
             item = {
                 'date': date,
-                'open': open,
-                'high': high,
-                'low': low,
-                'close': close,
-                'adj_close': adj_close,
-                'volume': volume
+                'open': float(open),
+                'high': float(high),
+                'low': float(low),
+                'close': float(close),
+                'adj_close': float(adj_close),
+                'volume': float(volume)
             }
             parsed_data.append(item)
 
