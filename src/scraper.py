@@ -5,6 +5,7 @@ import math
 import nltk
 nltk.downloader.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from datetime import datetime 
 
 
 class Scraper():
@@ -65,12 +66,16 @@ class Scraper():
                 continue
             link = row.a['href']
             title = row.a.text
-            date_data = row.td.text.split(' ')
+            tmp = row.find('td').text
+            date_data = tmp.strip().split(' ')
 
             if len(date_data) == 1:
                 time = date_data[0]
             else:
                 date = date_data[0]
+                if date == "Today":
+                    tmp_date = datetime.now()
+                    date = tmp_date.strftime('%b-%d-%y')
                 time = date_data[1]
 
             parsed_data.append([ticker, date, time, title, link])
@@ -173,4 +178,4 @@ class Scraper():
         return parsed_data
 
 # data = Scraper()
-# print(data.getPositiveNews('GME', 3))
+# print(data.getNegativeNews('GME', 5))
