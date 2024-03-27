@@ -12,6 +12,7 @@ async def check_health():
 
 @app.get("/market_data/", status_code=200)
 async def get_data(ticker: str, res: Response):
+    ticker = ticker.strip()
     try:
         return data.getPrices(ticker)
     except Exception:
@@ -20,6 +21,7 @@ async def get_data(ticker: str, res: Response):
 
 @app.get("/stock_news_sentiment/", status_code=200)
 async def get_sentiment(ticker: str, res: Response):
+    ticker = ticker.strip()
     try:
         return data.getSentiment(ticker)
     except Exception:
@@ -28,6 +30,7 @@ async def get_sentiment(ticker: str, res: Response):
 
 @app.get("/avg_sentiment/", status_code=200)
 async def get_avg_sentiment(ticker: str, res: Response):
+    ticker = ticker.strip()
     try:
         return data.getAvgSentiment(ticker)
     except Exception:
@@ -36,6 +39,7 @@ async def get_avg_sentiment(ticker: str, res: Response):
 
 @app.get("/top_positive_news/", status_code=200)
 async def get_top_positive_news(ticker: str, res: Response, count: int = 3):
+    ticker = ticker.strip()
     try:
         return data.getPositiveNews(ticker, count)
     except Exception:
@@ -44,6 +48,7 @@ async def get_top_positive_news(ticker: str, res: Response, count: int = 3):
 
 @app.get("/top_negative_news/", status_code=200)
 async def get_top_negative_news(ticker: str, res: Response, count: int = 3):
+    ticker = ticker.strip()
     try:
         return data.getNegativeNews(ticker, count)
     except Exception:
